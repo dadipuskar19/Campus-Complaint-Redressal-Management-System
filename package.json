@@ -1,0 +1,11 @@
+{
+  "name": "campus-complaint-system-root",
+  "version": "1.0.0",
+  "description": "Root workspace for the Real-Time Campus Complaint Management System",
+  "scripts": {
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "npx -y concurrently \"npm run server\" \"npm run client\""
+  }
+}

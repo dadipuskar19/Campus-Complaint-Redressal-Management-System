@@ -1,0 +1,21 @@
+{
+  "short_name": "VIIT Safety",
+  "name": "VIIT Campus Complaint Management Portal",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0f172a",
+  "theme_color": "#0c59a3",
+  "display": "standalone",
+  "orientation": "portrait"
+}
