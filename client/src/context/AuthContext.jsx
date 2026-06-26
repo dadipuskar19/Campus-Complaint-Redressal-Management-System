@@ -4,7 +4,18 @@ import { io } from 'socket.io-client';
 
 const AuthContext = createContext();
 
-const API_URL = 'http://localhost:5000/api';
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${BACKEND_URL}/api`;
+
+// Intercept all axios requests to rewrite localhost URLs to production API URLs in hosted environments
+axios.interceptors.request.use((config) => {
+  if (config.url && config.url.startsWith('http://localhost:5000/api')) {
+    config.url = config.url.replace('http://localhost:5000/api', API_URL);
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -23,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   // Initialize socket when user is logged in
   useEffect(() => {
     if (user && token) {
-      const socketConnection = io('http://localhost:5000');
+      const socketConnection = io(BACKEND_URL);
       
       socketConnection.on('connect', () => {
         console.log('[Socket] Connected to server');

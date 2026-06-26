@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, API_URL } from '../context/AuthContext';
 import { 
   FileSpreadsheet, FileText, Download, Calendar, 
   Filter, AlertCircle, ShieldAlert 
@@ -19,7 +19,7 @@ const Reports = () => {
 
   // Construct filtered report download urls
   const getDownloadUrl = (format) => {
-    let base = `http://localhost:5000/api/complaints/reports/${format}?token=${token}`;
+    let base = `${API_URL}/complaints/reports/${format}?token=${token}`;
     if (category) base += `&category=${category}`;
     if (priority) base += `&priority=${priority}`;
     if (status) base += `&status=${status}`;
