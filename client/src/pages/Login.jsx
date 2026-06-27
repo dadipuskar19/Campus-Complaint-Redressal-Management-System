@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, API_URL } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import { Mail, Lock, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.5.1' && window.location.hostname !== '127.0.0.1';
+  const isUsingLocalhostApi = API_URL.includes('localhost') || API_URL.includes('127.0.0.1') || API_URL.includes('127.0.5.1');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,6 +60,16 @@ const Login = () => {
             Campus Complaint & Redressal Management System
           </p>
         </div>
+
+        {isProduction && isUsingLocalhostApi && (
+          <div className="mb-4 p-3.5 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs rounded-xl space-y-1 text-left">
+            <span className="font-extrabold block text-amber-600 dark:text-amber-400">⚠️ Live Deploy Configuration Alert:</span>
+            <p className="leading-relaxed text-[11px] text-slate-500 dark:text-slate-400">
+              The frontend is running live on Vercel but is still pointing to a local backend API (<code className="bg-slate-200 dark:bg-slate-800 px-1 rounded text-red-500">localhost</code>).
+              To connect it, please add the <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded text-red-500">VITE_API_URL</code> environment variable in your **Vercel Project Settings** pointing to your deployed backend (e.g. Render/Railway URL).
+            </p>
+          </div>
+        )}
 
         {error && (
           <div className="mb-4 p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400 text-xs flex items-center gap-2.5 animate-shake">
